@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cars Table</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Фиксированное расположение таблицы */
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+            overflow: hidden; /* Скрывает переполняющий контент */
+            text-overflow: ellipsis; /* Отображает многоточие при переполнении */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Можно задать фиксированную ширину столбцов */
+        th, td {
+            width: 33%; /* Дает каждому столбцу одинаковую ширину */
+        }
+    </style>
+</head>
+<body>
+<h1>List of Users</h1>
+
+
+<table>
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Password</th>
+    </tr>
+    </thead>
+    <tbody>
+    <form th:action="@{/find}" method="get">
+        <input type="text" name="name" placeholder="Enter username" />
+        <button type="submit">Search</button>
+    </form>
+
+
+
+
+
+
+    <tr th:each="user : ${usersList}">
+        <!--  <th:block th:each="user : ${usersList}">
+              <p><b><a id="user" th:href="@{/users/find(name=${user.getUsername()})}" th:text="${user.getUsername()}"></a></b></p>
+          </th:block>-->
+        <td><a id="user" th:href="@{/users/getInfo(name=${user.getUsername()})}" th:text="${user.getUsername()}"></a></td>
+
+        <td th:text="${user.getPassword()}">password</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
