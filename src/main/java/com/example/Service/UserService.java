@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface UserService {
 
-    void addUser(User user);
+    boolean addUser(User user);
 
     User getUserByName(String name);
     List<User> getUsers();
-    void updateUser(String name, String password);
+    void updateUser(String username, String password);
     void deleteUser(String name);
 }

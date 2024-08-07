@@ -30,33 +30,31 @@
 </head>
 <body>
 <h1>List of Users</h1>
+<form th:action="@{/users/add}" method="get">
+        <button type="submit">User add</button>
+</form>
 
-
+<form th:action="@{/users/find}" method="get">
+    <input type="text" name="name" placeholder="Enter username" />
+    <button type="submit">Search</button>
+</form>
 <table>
     <thead>
     <tr>
         <th>Username</th>
-        <th>Password</th>
+<!--        <th>Password</th>-->
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
-    <form th:action="@{/find}" method="get">
-        <input type="text" name="name" placeholder="Enter username" />
-        <button type="submit">Search</button>
-    </form>
-
-
-
-
-
 
     <tr th:each="user : ${usersList}">
-        <!--  <th:block th:each="user : ${usersList}">
-              <p><b><a id="user" th:href="@{/users/find(name=${user.getUsername()})}" th:text="${user.getUsername()}"></a></b></p>
-          </th:block>-->
+
         <td><a id="user" th:href="@{/users/getInfo(name=${user.getUsername()})}" th:text="${user.getUsername()}"></a></td>
 
-        <td th:text="${user.getPassword()}">password</td>
+<!--        <td th:text="${user.getPassword()}">password</td>-->
+        <td> <a id="deleteUser" th:href="@{/users/delete(name=${user.getUsername()})}" th:text="'delete'" onclick="return confirm('Are you sure you want to delete this user?')"></a>
+        </td>
     </tr>
     </tbody>
 </table>

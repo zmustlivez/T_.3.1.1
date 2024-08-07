@@ -21,17 +21,15 @@
 <body>
 <h1>Search Result</h1>
 
-<div th:if="${message}" th:text="${message}" style="color: red;"></div>
-
-<div th:if="${searchedUser}">
+<div th:if="${user}">
     <table>
         <tr>
             <th>Username</th>
-            <td th:text="${searchedUser.username}"></td>
+            <td th:text="${user.getUsername()}"></td>
         </tr>
         <tr>
             <th>Password</th>
-            <td th:text="${searchedUser.password}"></td>
+            <td th:text="${user.getPassword()}"></td>
         </tr>
     </table>
 </div>

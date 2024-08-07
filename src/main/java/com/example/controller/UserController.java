@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 @Controller
@@ -18,15 +19,20 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/save")
-    public String addUser(@ModelAttribute("user") User user) {
-        userService.addUser(user);
-        return "redirect:/users";
-    }
-
     @GetMapping("/add")
     public String showAddUserForm(@ModelAttribute("user") User user) {
         return "save-user-form";
+    }
+
+    @PostMapping("/save")
+    public String addUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
+        boolean userAdded = userService.addUser(user);
+        if (userAdded) {
+            return "redirect:/users";
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "User with username '" + user.getUsername() + "' already exists.");
+            return "redirect:/users/add";
+        }
     }
 
     @GetMapping("/find")
@@ -35,10 +41,10 @@ public class UserController {
             User user = userService.getUserByName(name);
             if (user != null) {
                 model.addAttribute("user", user);
-                return "redirect:/find-result?name=" + name;
+                return "find-result";
             }
         }
-        return "redirect:/user-not-found";
+        return "user-not-found";
     }
 
     @GetMapping("/find-result")
@@ -48,7 +54,7 @@ public class UserController {
             model.addAttribute("user", user);
             return "find-result";
         }
-        return "redirect:/user-not-found";
+        return "user-not-found";
     }
 
     @GetMapping("/user-not-found")
@@ -57,7 +63,6 @@ public class UserController {
     }
 
     @GetMapping("/getInfo")
-
     public String getUserByName(@RequestParam("name") String name, Model model) {
         model.addAttribute("user", userService.getUserByName(name));
         return "user-page";
@@ -66,8 +71,6 @@ public class UserController {
     @GetMapping
     public String getUsers(Model model) {
         model.addAttribute("usersList", userService.getUsers());
-
-        // Проверяем, есть ли результат поиска
         if (model.containsAttribute("searchedUser")) {
             model.addAttribute("showSearchResult", true);
         }
@@ -76,14 +79,15 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@RequestParam("name") String name, @RequestParam("password") String password, Model
-            model) {
-        return "users";
+    public String updateUser(@RequestParam("username") String username, @RequestParam("password") String password) {
+        userService.updateUser(username, password);
+        return "redirect:/users/getInfo?name=" + username;
+//        return "user-page";
     }
 
-    @PostMapping("/delete")
-    public String deleteUser(@RequestParam("name") String name, Model model) {
+    @GetMapping("/delete")
+    public String deleteUser(@RequestParam("name") String name) {//, Model model) {
         userService.deleteUser(name);
-        return "users";
+        return "redirect:/users";
     }
 }

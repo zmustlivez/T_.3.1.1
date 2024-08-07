@@ -9,17 +9,18 @@
     </head>
 
     <body>
-    <form th:method="POST" th:action="@{/users/save}" th:object="${user}">
-    <label for="username">Please write "username"</label>
-        <input id="username" type="text" th:field="*{username}"/>
+    <form th:action="@{/users/save}" method="post" th:object="${user}">
+        <label for="username">Please write "username"</label>
+        <input id="username" type="text" th:field="*{username}" placeholder="Enter username"/>
 
-        <label for="password">Please write password</label>
-        <input id="password" type="text" th:field="*{password}"/>
+        <label for="password">Please write "password"</label>
+        <input id="password" type="text" th:field="*{password}" placeholder="Enter password"/>
 
-        <input type="submit" value="add"/>
+        <input type="submit" value="Add"/>
 
+        <div th:if="${errorMessage}">
+            <p th:text="${errorMessage}" style="color: red;"></p>
+        </div>
     </form>
-
     </body>
-
     </html>

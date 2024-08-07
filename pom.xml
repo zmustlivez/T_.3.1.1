@@ -17,6 +17,7 @@
 
         <mysql.version>8.0.25</mysql.version>
         <javax-servlet-api.version>4.0.1</javax-servlet-api.version>
+        <thyleaf.version>3.0.14.RELEASE</thyleaf.version>
     </properties>
 <dependencies>
     <dependency>
@@ -43,7 +44,7 @@
     <dependency>
         <groupId>org.thymeleaf</groupId>
         <artifactId>thymeleaf-spring5</artifactId>
-        <version>3.0.14.RELEASE</version>
+        <version>${thyleaf.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
     <dependency>
@@ -52,7 +53,7 @@
         <version>${javax-servlet-api.version}</version>
         <scope>provided</scope>
     </dependency>
-n
+
 </dependencies>
     <build>
         <pluginManagement>

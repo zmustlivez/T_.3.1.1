@@ -4,6 +4,7 @@ import com.example.model.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -13,8 +14,17 @@ public class UserDAOImpl implements UserDAO {
     private EntityManager entityManager;
 
     @Override
-    public void addUser(User user) {
-        entityManager.persist(user);
+    public boolean addUser(User user) {
+//        entityManager.persist(user);
+        try {
+            User existingUser = getUserByName(user.getUsername());
+            // Если мы дошли до этой точки, значит пользователь уже существует
+            return false;
+        } catch (NoResultException e) {
+            // Пользователь не найден, можно добавить нового
+            entityManager.persist(user);
+            return true;
+        }
     }
 
     @Override
@@ -28,15 +38,17 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void updateUser(String name, String password) {
-        User user = getUserByName(name);
+    public void updateUser(String username, String password) {
+        User user =  entityManager.createQuery("from User where username =:username", User.class).setParameter("username", username).getSingleResult();
+//        User user = getUserByName(password);
         user.setPassword(password);
         entityManager.merge(user);
     }
 
     @Override
-    public void deleteUser(String name) {
-
-        entityManager.createQuery("delete from User where username=:name", User.class);
+    public void deleteUser(User user) {
+        entityManager.remove(user);
+//        entityManager.remove(entityManager.find(User.class, name));
+//        entityManager.createQuery("delete from User where username=:name");
     }
 }

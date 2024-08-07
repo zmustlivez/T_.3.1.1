@@ -18,10 +18,10 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 @PropertySource({"classpath:db.properties", "classpath:hibernate.properties"})
 @EnableTransactionManagement
-@ComponentScan(value = "com.example")
+//@ComponentScan(value = "com.example")
 public class AppConfig {
 
     private final Environment environment;

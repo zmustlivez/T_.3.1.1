@@ -19,15 +19,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void addUser(User user) {
-        userDAO.addUser(user);
+    public boolean addUser(User user) {
+       return userDAO.addUser(user);
     }
 
 
     @Override
     public User getUserByName(String name) {
         return userDAO.getUserByName(name);
-
     }
 
     @Override
@@ -37,12 +36,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(String name, String password) {
-        userDAO.updateUser(name, password);
+    @Transactional
+    public void updateUser(String username,String password) {
+        userDAO.updateUser(username, password);
     }
 
     @Override
+    @Transactional
     public void deleteUser(String name) {
-        userDAO.deleteUser(name);
+        userDAO.deleteUser(getUserByName(name));
+
     }
 }

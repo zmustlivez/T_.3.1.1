@@ -4,11 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <title>T_2.3.1</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Фиксированное расположение таблицы */
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+            overflow: hidden; /* Скрывает переполняющий контент */
+            text-overflow: ellipsis; /* Отображает многоточие при переполнении */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Можно задать фиксированную ширину столбцов */
+        th, td {
+            width: 33%; /* Дает каждому столбцу одинаковую ширину */
+        }
+    </style>
 </head>
 
 <body>
+<table>
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Password</th>
+    </tr>
+    </thead>
+    <tbody>
 
-<p th:text="${user.toString()}"></p>
+    <td th:text="${user.getUsername()}">username</td>
+    <td th:text="${user.getPassword()}">password</td>
+
+
+    </td>
+    </tr>
+
+    </tbody>
+</table>
+<form th:method="post" th:action="@{/users/update}">
+    <div></div>
+    <input type="hidden" name="username" th:value="${user.username}"/>
+    <input type="text" id="password" name="password" placeholder="Enter NEW password"/>
+    </div>
+    <button type="submit">Setup new password</button>
+    <p><a th:href="@{/users}">Перейти к таблице с пользователями</a></p>
+</form>
 
 </body>
 
