@@ -2,7 +2,6 @@ package com.example.config;
 
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -11,17 +10,13 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-//@EnableWebMvc
 @PropertySource({"classpath:db.properties", "classpath:hibernate.properties"})
 @EnableTransactionManagement
-//@ComponentScan(value = "com.example")
 public class AppConfig {
 
     private final Environment environment;

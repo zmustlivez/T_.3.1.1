@@ -15,13 +15,10 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean addUser(User user) {
-//        entityManager.persist(user);
         try {
-            User existingUser = getUserByName(user.getUsername());
-            // Если мы дошли до этой точки, значит пользователь уже существует
+           getUserByName(user.getUsername());
             return false;
         } catch (NoResultException e) {
-            // Пользователь не найден, можно добавить нового
             entityManager.persist(user);
             return true;
         }

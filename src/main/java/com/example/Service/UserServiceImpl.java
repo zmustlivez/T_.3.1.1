@@ -4,8 +4,6 @@ import com.example.dao.UserDAO;
 import com.example.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
