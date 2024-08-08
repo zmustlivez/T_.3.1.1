@@ -15,18 +15,21 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean addUser(User user) {
-        try {
-           getUserByName(user.getUsername());
-            return false;
-        } catch (NoResultException e) {
+        if (getUserByName(user.getUsername()) == null) {
             entityManager.persist(user);
             return true;
+        } else {
+            return false;
         }
     }
 
     @Override
     public User getUserByName(String name) {
-        return entityManager.createQuery("from User where username=:name", User.class).setParameter("name", name).getSingleResult();
+        try {
+            return entityManager.createQuery("from User where username=:name", User.class).setParameter("name", name).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
@@ -35,17 +38,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void updateUser(String username, String password) {
-        User user =  entityManager.createQuery("from User where username =:username", User.class).setParameter("username", username).getSingleResult();
-//        User user = getUserByName(password);
-        user.setPassword(password);
+    public void updateUser(User user) {
         entityManager.merge(user);
     }
 
     @Override
     public void deleteUser(User user) {
         entityManager.remove(user);
-//        entityManager.remove(entityManager.find(User.class, name));
-//        entityManager.createQuery("delete from User where username=:name");
     }
 }

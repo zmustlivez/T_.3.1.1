@@ -1,4 +1,4 @@
-package com.example.Service;
+package com.example.service;
 
 import com.example.model.User;
 
@@ -9,7 +9,10 @@ public interface UserService {
     boolean addUser(User user);
 
     User getUserByName(String name);
+
     List<User> getUsers();
-    void updateUser(String username, String password);
+
+    void updateUser(User user);
+
     void deleteUser(String name);
 }

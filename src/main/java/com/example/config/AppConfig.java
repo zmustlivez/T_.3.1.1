@@ -38,7 +38,6 @@ public class AppConfig {
     @Bean
     LocalContainerEntityManagerFactoryBean getEntityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        //EntityManagerFactory Предоставляет возможность автоматического создания бинов и создание таблиц на основе бинов и др.
         em.setDataSource(getDataSource());
         em.setPackagesToScan(environment.getProperty("database_entity_package"));
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());

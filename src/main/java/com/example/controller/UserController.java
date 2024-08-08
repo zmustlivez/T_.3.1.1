@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.Service.UserService;
+import com.example.service.UserService;
 import com.example.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,21 +36,11 @@ public class UserController {
     @GetMapping("/find")
     public String searchUser(@RequestParam("name") String name, Model model) {
         if (name != null && !name.isEmpty()) {
-            User user = userService.getUserByName(name);
-            if (user != null) {
+            User user;
+            if ((user = userService.getUserByName(name)) != null) {
                 model.addAttribute("user", user);
                 return "find-result";
             }
-        }
-        return "user-not-found";
-    }
-
-    @GetMapping("/find-result")
-    public String showUserResult(@RequestParam("name") String name, Model model) {
-        User user = userService.getUserByName(name);
-        if (user != null) {
-            model.addAttribute("user", user);
-            return "find-result";
         }
         return "user-not-found";
     }
@@ -77,14 +67,19 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@RequestParam("username") String username, @RequestParam("password") String password) {
-        userService.updateUser(username, password);
-        return "redirect:/users/getInfo?name=" + username;
-//        return "user-page";
+    public String updateUser(@RequestParam("password") String password, @ModelAttribute("user") User user) {
+        if (user != null) {
+            User existingUser = userService.getUserByName(user.getUsername());
+            existingUser.setPassword(password);
+            userService.updateUser(existingUser);
+            return "redirect:/users/getInfo?name=" + existingUser.getUsername();
+        } else {
+            return "user-not-found";
+        }
     }
 
     @GetMapping("/delete")
-    public String deleteUser(@RequestParam("name") String name) {//, Model model) {
+    public String deleteUser(@RequestParam("name") String name) {
         userService.deleteUser(name);
         return "redirect:/users";
     }

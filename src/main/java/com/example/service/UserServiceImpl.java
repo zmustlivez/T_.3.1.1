@@ -1,4 +1,4 @@
-package com.example.Service;
+package com.example.service;
 
 import com.example.dao.UserDAO;
 import com.example.model.User;
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public boolean addUser(User user) {
-       return userDAO.addUser(user);
+        return userDAO.addUser(user);
     }
 
 
@@ -35,8 +35,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(String username,String password) {
-        userDAO.updateUser(username, password);
+    public void updateUser(User user) {
+        userDAO.updateUser(user);
+
     }
 
     @Override
