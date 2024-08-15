@@ -22,6 +22,7 @@ public class UserController {
         return "save-user-form";
     }
 
+
     @PostMapping("/save")
     public String addUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
         boolean userAdded = userService.addUser(user);
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping("/find")
-    public String searchUser(@RequestParam("name") String name, Model model) {
+    public String searchUser(@RequestParam("username") String name, Model model) {
         if (name != null && !name.isEmpty()) {
             User user;
             if ((user = userService.getUserByName(name)) != null) {

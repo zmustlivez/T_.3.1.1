@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.dao.UserDAO;
 import com.example.model.User;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
